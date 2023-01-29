@@ -1,0 +1,9 @@
+<Project>
+        <PropertyGroup>
+                <BaseOutputPath>$(SolutionDir)Out\$(MSBuildProjectName)\bin\</BaseOutputPath>
+                <BaseIntermediateOutputPath>$(SolutionDir)Out\$(MSBuildProjectName)\obj\</BaseIntermediateOutputPath>
+        </PropertyGroup>
+
+        <Import Project="$(SolutionDir)Common.props" Label="Правила и nuget-пакет StyleCop, GlobalAssemblyInfo" />
+
+</Project>

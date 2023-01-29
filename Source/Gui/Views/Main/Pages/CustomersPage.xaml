@@ -1,0 +1,433 @@
+﻿<Page x:Class="Gui.Views.CustomersPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:mde="clr-namespace:MaterialDesignExtensions.Controls;assembly=MaterialDesignExtensions"
+      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+      xmlns:views="clr-namespace:Gui.Views"
+      xmlns:cleanModels="clr-namespace:CleanModels;assembly=CleanModels"
+      mc:Ignorable="d"
+      Title="Customers"
+      Height="770"
+      Width="1360"
+      Background="#F0F2F4"
+      TextElement.Foreground="#707070"
+      TextElement.FontWeight="Regular"
+      TextElement.FontSize="22"
+      TextElement.FontFamily="Microsoft YaHei UI Light"
+      TextOptions.TextFormattingMode="Ideal"
+      TextOptions.TextRenderingMode="Auto">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding RefreshCommand}"/>
+        </i:EventTrigger>
+        <!--<i:EventTrigger EventName="Click" SourceObject="{Binding ElementName=}">
+            <i:InvokeCommandAction Command="{Binding }"/>
+        </i:EventTrigger>-->
+    </i:Interaction.Triggers>
+    
+    <Border
+        Padding="20,6,20,6">
+        
+        <DockPanel
+            LastChildFill="True">
+            
+            <Border
+                DockPanel.Dock="Top">
+                
+                <TextBlock
+                    Name="TitleTextBlock"
+                    Text="Заказчики"
+                    TextAlignment="Center"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    FontSize="26">
+                </TextBlock>
+                
+            </Border>
+            
+            <Border
+                Name="ActionsBorder"
+                DockPanel.Dock="Top"
+                Margin="0,8,0,8"
+                IsEnabled="{Binding ActionsBorderIsEnabled, UpdateSourceTrigger=PropertyChanged}">
+                
+                <DockPanel
+                    LastChildFill="False"><!--Orientation="Horizontal"-->
+
+                    <Border
+                        DockPanel.Dock="Left"
+                        Margin="0,0,0,0">
+                        
+                        <mde:PersistentSearch
+                            Name="TextBoxFilter"
+                            VerticalAlignment="Top"
+                            Padding="0"
+                            Height="30"
+                            Width="1070"
+                            FontSize="14"
+                            Background="White"
+                            SearchHint="Поиск"
+                            SearchIcon="{x:Static md:PackIconKind.Search}"
+                            CancelIcon="{x:Static md:PackIconKind.Close}"
+                            ClearIcon="{x:Static md:PackIconKind.Broom}"
+                            md:ShadowAssist.ShadowDepth="Depth0"
+                            PreviewKeyUp="TextBoxFilterPreviewKeyUp"/>
+                        
+                    </Border>
+                    
+                    <Border
+                        DockPanel.Dock="Right"
+                        Margin="20,0,0,0">
+                        
+                        <Button
+                            x:Name="BtnAdd"
+                            ToolTip="Перейти в режим добавления элементов"
+                            Height="Auto"
+                            Width="110"
+                            BorderThickness="0"
+                            Background="#C82753FF"
+                            Foreground="White"
+                            Click="BtnAddClick">
+                            
+                            <TextBlock
+                                x:Name="BtnAddTextBlock"
+                                Text="Добавить"
+                                TextWrapping="Wrap"
+                                FontSize="16"
+                                HorizontalAlignment="Center"/>
+                            
+                        </Button>
+                        
+                    </Border>
+                    
+                    <Border
+                        DockPanel.Dock="Right"
+                        Margin="20,0,0,0">
+                        
+                        <Button
+                            x:Name="BtnDelete"
+                            ToolTip="Удалить выбранные элементы"
+                            Height="Auto"
+                            Width="100"
+                            BorderThickness="0"
+                            Background="#C8F02E30"
+                            Foreground="White"
+                            Click="BtnDeleteClick">
+                            
+                            <TextBlock
+                                Text="Удалить"
+                                TextWrapping="Wrap"
+                                FontSize="16"
+                                HorizontalAlignment="Center"/>
+                            
+                        </Button>
+                        
+                    </Border>
+                    
+                </DockPanel>
+                
+            </Border>
+            
+            <Border
+                DockPanel.Dock="Top">
+                        
+                    <DataGrid
+                        x:Name="DgCustomers"
+                        VirtualizingStackPanel.IsVirtualizing="False"
+                        AutoGenerateColumns="False"
+                        Height="280"
+                        IsReadOnly="False"
+                        CanUserAddRows="False"
+                        CanUserReorderColumns="True"
+                        CanUserResizeColumns="True"
+                        CanUserSortColumns="True"
+                        GridLinesVisibility="Horizontal"
+                        VerticalGridLinesBrush="#707070"
+                        HorizontalGridLinesBrush="#707070"
+                        RowEditEnding="RowEditEnding"
+                        CellEditEnding="CellEditEnding"
+                        BeginningEdit="BeginningEdit"
+                        SelectionChanged="DgCustomersSelectionChanged"
+                        Background="White"
+                        SelectionMode="Extended"
+                        SelectionUnit="FullRow"
+                        ItemsSource="{Binding Items, UpdateSourceTrigger=PropertyChanged}">
+
+                        <DataGrid.Resources>
+                            <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}"
+                                   TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="Background" Value="#DFF2FE"/>
+                                <Setter Property="Foreground" Value="#707070"/>
+                            </Style>
+                        </DataGrid.Resources>
+                    
+                        <DataGrid.Columns>
+                            <DataGridTextColumn 
+                                Header="Логин"
+                                Binding="{Binding User.Login}"
+                                Width="Auto"
+                                IsReadOnly="True"/>
+                            <DataGridTextColumn 
+                                Header="Фамилия"
+                                Binding="{Binding LastName}"
+                                Width="Auto"/>
+                            <DataGridTextColumn 
+                                Header="Имя"
+                                Binding="{Binding FirstName}"
+                                Width="Auto"/>
+                            <DataGridTextColumn 
+                                Header="Отчество"
+                                Binding="{Binding Patronymic}"
+                                Width="Auto"/>
+                            <DataGridComboBoxColumn 
+                                Header="Пол"
+                                Width="Auto"
+                                ItemsSource="{Binding Source={views:Enumeration 
+                                {x:Type cleanModels:Gender}}}" 
+                                DisplayMemberPath="Description"
+                                SelectedValuePath="Value"
+                                SelectedValueBinding="{Binding Gender}"/>
+                            <DataGridTextColumn
+                                Header="Электронная почта"
+                                Binding="{Binding EmailAddress}"
+                                Width="Auto"/>
+                        </DataGrid.Columns>
+                        
+                    </DataGrid>
+                
+            </Border>
+            
+            <Border
+                Name="OrdersTitleBorder"
+                DockPanel.Dock="Top"
+                Margin="0,12,0,0">
+                
+                <TextBlock
+                    Name="OrdersTitleTextBlock"
+                    Text="Заказы заказчика"
+                    TextAlignment="Center"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    FontSize="26">
+                </TextBlock>
+                
+            </Border>
+            
+            <Border
+                Name="OrdersActionsBorder"
+                DockPanel.Dock="Top"
+                Margin="0,8,0,8"
+                IsEnabled="{Binding OrdersActionsBorderIsEnabled, UpdateSourceTrigger=PropertyChanged}">
+                
+                <DockPanel
+                    LastChildFill="False">
+
+                    <Border
+                        DockPanel.Dock="Left"
+                        Margin="0,0,0,0">
+                        
+                        <mde:PersistentSearch
+                            Name="TextBoxFilterOrders"
+                            VerticalAlignment="Top"
+                            Padding="0"
+                            Height="30"
+                            Width="1070"
+                            FontSize="14"
+                            Background="White"
+                            SearchHint="Поиск"
+                            SearchIcon="{x:Static md:PackIconKind.Search}"
+                            CancelIcon="{x:Static md:PackIconKind.Close}"
+                            ClearIcon="{x:Static md:PackIconKind.Broom}"
+                            md:ShadowAssist.ShadowDepth="Depth0"
+                            PreviewKeyUp="TextBoxFilterOrdersPreviewKeyUp"/>
+                        
+                    </Border>
+                    
+                    <Border
+                        DockPanel.Dock="Right"
+                        Margin="20,0,0,0">
+                        
+                        <Button
+                            x:Name="BtnAddOrders"
+                            ToolTip="Перейти в режим добавления элементов"
+                            Height="Auto"
+                            Width="110"
+                            BorderThickness="0"
+                            Background="#C82753FF"
+                            Foreground="White"
+                            Click="BtnAddOrdersClick">
+                            
+                            <TextBlock
+                                x:Name="BtnAddOrderTextBlock"
+                                Text="Добавить"
+                                TextWrapping="Wrap"
+                                FontSize="16"
+                                HorizontalAlignment="Center"/>
+                            
+                        </Button>
+                        
+                    </Border>
+                    
+                    <Border
+                        DockPanel.Dock="Right"
+                        Margin="20,0,0,0">
+                        
+                        <Button
+                            x:Name="BtnDeleteOrders"
+                            ToolTip="Удалить выбранные элементы"
+                            Height="Auto"
+                            Width="100"
+                            BorderThickness="0"
+                            Background="#C8F02E30"
+                            Foreground="White"
+                            Click="BtnDeleteOrdersClick">
+                            
+                            <TextBlock
+                                Text="Удалить"
+                                TextWrapping="Wrap"
+                                FontSize="16"
+                                HorizontalAlignment="Center"/>
+                            
+                        </Button>
+                        
+                    </Border>
+                    
+                </DockPanel>
+                
+            </Border>
+            
+            <Border
+                DockPanel.Dock="Top">
+                        
+                    <DataGrid
+                        x:Name="DgOrders"
+                        VirtualizingStackPanel.IsVirtualizing="False"
+                        AutoGenerateColumns="False"
+                        IsReadOnly="False"
+                        CanUserAddRows="False"
+                        CanUserReorderColumns="True"
+                        CanUserResizeColumns="True"
+                        CanUserSortColumns="True"
+                        GridLinesVisibility="Horizontal"
+                        VerticalGridLinesBrush="#707070"
+                        HorizontalGridLinesBrush="#707070"
+                        RowEditEnding="OrderRowEditEnding"
+                        CellEditEnding="OrderCellEditEnding"
+                        BeginningEdit="OrderBeginningEdit"
+                        Background="White"
+                        SelectionMode="Extended"
+                        SelectionUnit="FullRow"
+                        ItemsSource="{Binding Orders, UpdateSourceTrigger=PropertyChanged}">
+
+                        <DataGrid.Resources>
+                            <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}"
+                                   TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="Background" Value="#DFF2FE"/>
+                                <Setter Property="Foreground" Value="#707070"/>
+                            </Style>
+                        </DataGrid.Resources>
+                    
+                        <DataGrid.Columns>
+                            <DataGridTextColumn 
+                                Header="Номер"
+                                Binding="{Binding Number}"
+                                Width="Auto"
+                                IsReadOnly="True"/>
+                            <DataGridTextColumn 
+                                Header="Название"
+                                Binding="{Binding Title}"
+                                Width="Auto"/>
+                            <DataGridTextColumn 
+                                Header="Текст"
+                                Binding="{Binding Text}"
+                                Width="Auto"/>
+                            <DataGridTextColumn
+                                Header="Стоимость"
+                                Binding="{Binding Cost, StringFormat=\{0:C\}}"
+                                Width="Auto"
+                                IsReadOnly="True"/>
+                            <!--<DataGridComboBoxColumn
+                                Header="Статус"
+                                Width="Auto"
+                                SelectedItemBinding="{Binding Status}">
+                                <DataGridComboBoxColumn.ItemsSource>
+                                    <collections:ArrayList>
+                                        <system:String>Не взят в работу</system:String>
+                                        <system:String>Разработка ТЗ</system:String>
+                                        <system:String>Проектирование</system:String>
+                                        <system:String>Кодирование</system:String>
+                                        <system:String>Тестирование</system:String>
+                                        <system:String>Внедрение</system:String>
+                                        <system:String>Выполнено</system:String>
+                                    </collections:ArrayList>
+                                </DataGridComboBoxColumn.ItemsSource>
+                            </DataGridComboBoxColumn>-->
+                            <DataGridComboBoxColumn 
+                                Header="Статус"
+                                Width="Auto"
+                                IsReadOnly="True"
+                                ItemsSource="{Binding Source={views:Enumeration 
+                                {x:Type cleanModels:OrderStatus}}}" 
+                                DisplayMemberPath="Description"
+                                SelectedValuePath="Value"
+                                SelectedValueBinding="{Binding Status}"/>
+                            <DataGridTextColumn
+                                Header="Дата создания"
+                                Binding="{Binding CreationDate, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}"
+                                Width="Auto"
+                                IsReadOnly="True"/>
+                            <DataGridTextColumn 
+                                Header="Дата завершения"
+                                Binding="{Binding DoneDate, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}"
+                                Width="Auto"
+                                IsReadOnly="True"/>
+                            <DataGridTextColumn 
+                                Header="Название ТЗ"
+                                Binding="{Binding StatementOfWork.Title}"
+                                Width="Auto"
+                                IsReadOnly="True"/>
+                            <DataGridTextColumn 
+                                Header="Текст ТЗ"
+                                Binding="{Binding StatementOfWork.Text}"
+                                Width="Auto"
+                                IsReadOnly="True"/>
+                            <!--<DataGridComboBoxColumn
+                                Header="Статус ТЗ"
+                                Width="Auto"
+                                SelectedItemBinding="{Binding StatementOfWork.Status}">
+                                <DataGridComboBoxColumn.ItemsSource>
+                                    <collections:ArrayList>
+                                        <system:String>Не готово</system:String>
+                                        <system:String>Готово</system:String>
+                                    </collections:ArrayList>
+                                </DataGridComboBoxColumn.ItemsSource>
+                            </DataGridComboBoxColumn>-->
+                            <DataGridComboBoxColumn 
+                                Header="Статус ТЗ"
+                                Width="Auto"
+                                IsReadOnly="True"
+                                ItemsSource="{Binding Source={views:Enumeration 
+                                {x:Type cleanModels:StatementOfWorkStatus}}}" 
+                                DisplayMemberPath="Description"
+                                SelectedValuePath="Value"
+                                SelectedValueBinding="{Binding StatementOfWork.Status}"/>
+                            <DataGridTextColumn 
+                                Header="Дата завершения ТЗ"
+                                Binding="{Binding StatementOfWork.DoneDate}"
+                                Width="Auto"
+                                IsReadOnly="True"/>
+                        </DataGrid.Columns>
+                        
+                    </DataGrid>
+                
+            </Border>
+        
+    </DockPanel>
+        
+    </Border>
+    
+</Page>

@@ -1,0 +1,282 @@
+﻿<Window x:Class="Gui.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="Main"
+        Height="800"
+        Width="1500"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Background="#F0F2F4"
+        TextElement.Foreground="#F0F2F4"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="22"
+        TextElement.FontFamily="Microsoft YaHei UI Light"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto">
+    
+    <Window.Resources>
+        
+        <Style x:Key = "LeftBorderButtonBorder" TargetType = "Border">
+            <Setter Property = "Background" Value = "Transparent"/>
+            <Style.Triggers>
+                <Trigger Property = "IsMouseOver" Value = "True">
+                    <Setter Property = "Background" Value = "#C82753FF"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+        <Style x:Key = "LeftBorderLogOutButtonBorder" TargetType = "Border">
+            <Setter Property = "Background" Value = "Transparent"/>
+            <Style.Triggers>
+                <Trigger Property = "IsMouseOver" Value = "True">
+                    <Setter Property = "Background" Value = "#C8BE2314"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        
+        <!--<Style x:Key = "ButtonColor" TargetType = "Button">
+            <Setter Property = "Background" Value = "Transparent" />
+            <Style.Triggers>
+                <Trigger Property = "IsPressed" Value = "True">
+                    <Setter Property = "Background" Value = "#800056" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>-->
+        
+    </Window.Resources>
+    
+    <DockPanel
+        LastChildFill="True">
+            
+            <Border
+                Width="150"
+                Background="#2344AF"
+                DockPanel.Dock="Left">
+                
+                <StackPanel>
+                    
+                    <Border
+                        MouseDown="TopRowMouseDown"
+                        Margin="0 0 0 11"
+                        Height="30"
+                        Background="#1A3078">
+                        
+                        <TextBlock 
+                            Text="SDC"
+                            TextWrapping="Wrap"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="22"/>
+                        
+                    </Border>
+                    
+                    <Border
+                        Style="{StaticResource LeftBorderButtonBorder}">
+                        
+                        <Button
+                            x:Name="BtnCustomers"
+                            ToolTip="Открыть страницу с заказчиками"
+                            Height="Auto"
+                            BorderThickness="0"
+                            Background="Transparent"
+                            Command="{Binding OpenCustomersPageCommand}">
+                            
+                            <Grid Width="120">
+                                
+                                <TextBlock
+                                    Name="BtnCustomersTextBlock"
+                                    Text="Заказчики"
+                                    TextWrapping="Wrap"
+                                    FontFamily="Microsoft YaHei UI Light"
+                                    FontSize="18"
+                                    Margin="0,5,0,5"
+                                    HorizontalAlignment="Left"/>
+                                
+                            </Grid>
+                            
+                        </Button>
+                        
+                    </Border>
+                    
+                    <Border
+                        Style="{StaticResource LeftBorderButtonBorder}">
+                        
+                        <Button
+                            x:Name="BtnOrders"
+                            ToolTip="Открыть страницу с заказами"
+                            Height="Auto"
+                            BorderThickness="0"
+                            Background="Transparent"
+                            Command="{Binding OpenOrdersPageCommand}">
+                            
+                            <Grid Width="120">
+                                
+                                <TextBlock
+                                    Text="Заказы"
+                                    TextWrapping="Wrap"
+                                    FontFamily="Microsoft YaHei UI Light"
+                                    FontSize="18"
+                                    Margin="0,5,0,5"
+                                    HorizontalAlignment="Left"/>
+                                
+                            </Grid>
+                            
+                        </Button>
+                        
+                    </Border>
+                    
+                    <Border
+                        Style="{StaticResource LeftBorderButtonBorder}">
+                        
+                        <Button
+                            x:Name="BtnEmployees"
+                            ToolTip="Открыть страницу с сотрудниками"
+                            Height="Auto"
+                            BorderThickness="0"
+                            Background="Transparent"
+                            Command="{Binding OpenEmployeesPageCommand}">
+                            
+                            <Grid Width="120">
+                                
+                                <TextBlock
+                                    Text="Сотрудники"
+                                    TextWrapping="Wrap"
+                                    FontFamily="Microsoft YaHei UI Light"
+                                    FontSize="18"
+                                    Margin="0,5,0,5"
+                                    HorizontalAlignment="Left"/>
+                                
+                            </Grid>
+                            
+                        </Button>
+                        
+                    </Border>
+                    
+                    <Border
+                        Style="{StaticResource LeftBorderButtonBorder}">
+                        
+                        <Button
+                            x:Name="BtnUsers"
+                            ToolTip="Открыть страницу с пользователями"
+                            Height="Auto"
+                            BorderThickness="0"
+                            Background="Transparent"
+                            Command="{Binding OpenUsersPageCommand}">
+                            
+                            <Grid Width="120">
+                                
+                                <TextBlock
+                                    Name="BtnUsersTextBlock"
+                                    Text="Пользователи"
+                                    TextWrapping="Wrap"
+                                    FontFamily="Microsoft YaHei UI Light"
+                                    FontSize="18"
+                                    Margin="0,5,0,5"
+                                    HorizontalAlignment="Left"/>
+                                
+                            </Grid>
+                            
+                        </Button>
+                        
+                    </Border>
+                    
+                    <Border>
+                        
+                        <Button
+                            x:Name="BtnLogout"
+                            ToolTip="Выйти из аккаунта"
+                            Height="Auto"
+                            BorderThickness="0"
+                            Background="#C8F02E30"
+                            Margin="2"
+                            Command="{Binding LogOutCommand}">
+                            
+                            <Grid Width="120">
+                                
+                                <TextBlock
+                                    Text="Выйти"
+                                    TextWrapping="Wrap"
+                                    FontFamily="Microsoft YaHei UI Light"
+                                    FontSize="18"
+                                    Margin="0,5,0,5"
+                                    HorizontalAlignment="Left"/>
+                                
+                            </Grid>
+                            
+                        </Button>
+                        
+                    </Border>
+                    
+                </StackPanel>
+                
+            </Border>
+            
+            <Border
+                DockPanel.Dock="Top"
+                Height="30"
+                MouseDown="TopRowMouseDown"
+                Background="#2344AF">
+                
+                <StackPanel
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+                    
+                    <Button
+                        x:Name="BtnHide"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                        Width="25"
+                        Height="25"
+                        Margin="2,0"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        Foreground="White"
+                        Click="BtnHideClick">
+                        <md:PackIcon Kind="Minus"/>
+                    </Button>
+                    
+                    <Button
+                        x:Name="BtnExitPanel"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                        Width="25"
+                        Height="25"
+                        Margin="2,0"
+                        Background="{x:Null}"
+                        BorderBrush="{x:Null}"
+                        Foreground="White"
+                        Click="BtnExitClick">
+                        <md:PackIcon Kind="Close"/>
+                    </Button>
+                    
+                </StackPanel>
+                
+            </Border>
+
+            <Grid>
+                
+                <!--<StackPanel HorizontalAlignment="Center"
+                            VerticalAlignment="Center">~1~TODO Del@1@
+
+                    <TextBlock
+                        Text="DEL IT Welcome to the App!&#x0a;Select an action in the panel on the left."
+                        TextAlignment="Center"
+                        TextWrapping="Wrap"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="32"
+                        Foreground="Black">
+                    </TextBlock>
+                    
+                </StackPanel>-->
+                
+                <Frame x:Name="Page" x:FieldModifier="public" NavigationUIVisibility="Hidden"/>
+                
+            </Grid>
+            
+    </DockPanel>
+    
+</Window>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	
+    <PropertyGroup>
+        <!--
+        SA1633: The file header is missing or not located at the top of the file.
+        SA1314: The name of a C# type parameter does not begin with the capital letter T.
+        SA1623: The documentation text within a C# property's <summary> tag does not match the accessors within the property.
+        SA1642: The XML documentation header for a C# constructor does not contain the appropriate summary text.
+        SA1101: A call to an instance member of the local class or a base class is not prefixed with 'this.', within a C# code file.
+        SA1204: Static members should appear before non-static members.
+        -->
+        <NoWarn>SA1633,SA1314,SA1623,SA1642,SA1101,SA1204</NoWarn>
+        <MSBuildWarningsAsMessages>NU1701</MSBuildWarningsAsMessages>
+    </PropertyGroup>
+    
+    <ItemGroup Label="Общий для всех проектов пакет StyleCop + GAI">
+        
+        <AdditionalFiles Include="$(MSBuildThisFileDirectory)\StyleCop.json"/>
+        <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+</Project>

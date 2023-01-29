@@ -1,0 +1,5 @@
+﻿{
+  "ConnectionStrings": {
+    "Main": "Data Source=.\\; Initial Catalog=SoftwareDevelopmentCompany; Integrated Security=SSPI; Encrypt=no"
+  }
+}

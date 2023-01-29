@@ -1,0 +1,162 @@
+﻿<Window x:Class="Gui.Views.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:views="clr-namespace:Gui.Views"
+        mc:Ignorable="d"
+        Title="Login"
+        Height="250"
+        Width="250"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Background="#F0F2F4"
+        TextElement.Foreground="#F0F2F4"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="22"
+        TextElement.FontFamily="Microsoft YaHei UI Light"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto">
+    
+    <DockPanel
+        LastChildFill="True">
+        
+        <Border
+            DockPanel.Dock="Top"
+            Height="30"
+            MouseDown="TopRowMouseDown"
+            Background="#2344AF">
+                
+            <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Right">
+                    
+                <Button
+                    x:Name="BtnHide"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                    Width="25"
+                    Height="25"
+                    Margin="2,0"
+                    Background="{x:Null}"
+                    BorderBrush="{x:Null}"
+                    Foreground="White"
+                    Click="BtnHideClick">
+                    <md:PackIcon Kind="Minus"/>
+                </Button>
+                    
+                <Button
+                    x:Name="BtnExitPanel"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                    Width="25"
+                    Height="25"
+                    Margin="2,0"
+                    Background="{x:Null}"
+                    BorderBrush="{x:Null}"
+                    Foreground="White"
+                    Click="BtnExitClick">
+                    <md:PackIcon Kind="Close"/>
+                </Button>
+                    
+            </StackPanel>
+                
+        </Border>
+        
+        <Border
+            DockPanel.Dock="Top"
+            Height="38"
+            Background="#1A3078">
+                        
+            <TextBlock
+                Text="SDC"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="26"/>
+                        
+        </Border>
+        
+        <Border
+            DockPanel.Dock="Top">
+            
+            <DockPanel
+                LastChildFill="True"
+                Margin="10,5,10,23">
+                
+                <DockPanel
+                    DockPanel.Dock="Top"
+                    LastChildFill="True">
+                    
+                    <md:PackIcon
+                        DockPanel.Dock="Left"
+                        Kind="User"
+                        Height="25"
+                        Width="25"
+                        Margin="0 19 10 0"
+                        Foreground="#1A348C"/>
+                
+                    <TextBox
+                        x:Name="TbLogin"
+                        DockPanel.Dock="Left"
+                        md:HintAssist.Hint="Введите логин" 
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}"
+                        FontSize="16"
+                        Foreground="#707070"/>
+                    
+                </DockPanel>
+                
+                <DockPanel
+                    DockPanel.Dock="Top"
+                    LastChildFill="True">
+                    
+                    <md:PackIcon
+                        DockPanel.Dock="Left"
+                        Kind="Password"
+                        Height="25"
+                        Width="25"
+                        Margin="0 19 10 0"
+                        Foreground="#1A328C"/>
+                    
+                    <PasswordBox
+                        x:Name="PassBox"
+                        DockPanel.Dock="Left"
+                        md:HintAssist.Hint="Введите пароль"
+                        Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                        FontSize="16"
+                        PasswordChar="*"
+                        Cursor="IBeam"
+                        Foreground="#707070"
+                        views:PasswordBoxAttachedProperties.EncryptedPassword="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        PasswordChanged="PasswordChanged"/>
+                    <!--<uc:PasswordBox/>-->
+
+                </DockPanel>
+                
+                <Button
+                    x:Name="BtnLogin"
+                    ToolTip=""
+                    Margin="0,25,0,0"
+                    Height="Auto"
+                    Width="220"
+                    HorizontalAlignment="Center"
+                    BorderThickness="0"
+                    Background="#2547D7"
+                    Command="{Binding LoginCommand}"
+                    IsEnabled="{Binding BtnLoginIsEnabled, UpdateSourceTrigger=PropertyChanged}">
+
+                    <TextBlock
+                        Text="Войти"
+                        TextAlignment="Center"
+                        HorizontalAlignment="Center"
+                        FontSize="22"/>
+                            
+                </Button>
+                
+            </DockPanel>
+            
+        </Border>
+        
+    </DockPanel>
+        
+</Window>
